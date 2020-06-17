@@ -1,10 +1,18 @@
 import requests, random
 from bs4 import BeautifulSoup
 from tkinter import *
+#This function creates a random number and formats it to be part of URL's in 
+#retreive_actor_data. This is done because IMDB sorts its profiles not by name, 
+#but by when they were entered into the database. Each profile has a unique number
+#which can be used in a URL to bring up their profile, hence the reason for this 
+#function
 def pick_random_actor():
     num=random.randint(1,1000)
     zeroes=7-len(str(num))
     retrieve_actor_data(("0"*zeroes)+str(num))
+#Uses the previously generated number along with requests
+#and bs4 to retreive data on the random profile and
+#formats it to be shown on the GUI
 def retrieve_actor_data(actor_num):
     info_URL="https://www.imdb.com/name/nm"+actor_num+"/"
     movie_URL = "https://www.imdb.com/filmosearch/?sort=num_votes&explore=title_type&role=nm"+actor_num+"&ref_=nm_flmg_shw_4"
@@ -22,6 +30,7 @@ def retrieve_actor_data(actor_num):
     movie_3=movies[2].text.strip().replace("\n"," ")
     data=name+"\n"+age+"\n"+movie_1+"\n"+movie_2+"\n"+movie_3
     info_label.configure(text=data)
+#This chunk of code sets up the entire GUI
 window=Tk()
 window.geometry("650x300")
 the_canvas = Canvas(window,width=651,height=501, highlightthickness=0,bg="#2a75d5")
